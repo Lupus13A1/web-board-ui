@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webboard – หน้าแรก</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-white border-bottom sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary">
+          <i class="fas fa-comments"></i> WebBoard
+        </a>
+
+        <form class="d-flex w-50">
+          <input
+            class="form-control"
+            type="search"
+            placeholder="ค้นหากระทู้..."
+          />
+        </form>
+
+        <div class="d-flex gap-2">
+          <a href="login.html" class="btn btn-outline-primary">เข้าสู่ระบบ</a>
+          <a href="register.html" class="btn btn-primary">สมัครสมาชิก</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container my-4">
+      <div class="row">
+        <!-- Sidebar -->
+        <aside class="col-md-3">
+          <div class="card mb-3">
+            <div class="card-body text-center">
+              <div
+                class="rounded-circle bg-secondary text-white mx-auto mb-3 d-flex justify-content-center align-items-center"
+                style="width: 70px; height: 70px; font-size: 1.5rem"
+              >
+                A
+              </div>
+              <h5 class="mb-0">Admin User</h5>
+              <span class="badge bg-danger mt-1">Admin</span>
+              <a href="#" class="btn btn-primary w-100 mt-3">
+                <i class="fas fa-plus"></i> ตั้งกระทู้ใหม่
+              </a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header d-flex justify-content-between">
+              <span>หมวดหมู่</span>
+              <button class="btn btn-sm btn-light">
+                <i class="fas fa-cog"></i>
+              </button>
+            </div>
+            <ul class="list-group list-group-flush">
+              <a class="list-group-item active">ทั้งหมด</a>
+              <a class="list-group-item">พูดคุยทั่วไป</a>
+              <a class="list-group-item">ข่าวสาร IT</a>
+              <a class="list-group-item">สอบถามปัญหา</a>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Thread List -->
+        <main class="col-md-9">
+          <!-- Thread -->
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <span class="badge bg-primary">Member</span>
+                  <strong class="ms-2">Somchai_007</strong>
+                  <span class="text-muted">• 2 ชั่วโมงที่แล้ว</span>
+                  <h5 class="mt-2">
+                    <a href="topic.html" class="text-decoration-none"
+                      >สอบถามเรื่องการเขียน React ครับ</a
+                    >
+                  </h5>
+                </div>
+
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="fas fa-ban"></i> Ban User
+                </button>
+              </div>
+
+              <p class="text-muted mt-2">
+                ผมพยายามใช้ useEffect แต่มันรันซ้ำ 2 รอบ...
+              </p>
+
+              <div class="d-flex justify-content-between border-top pt-3">
+                <div class="d-flex gap-2">
+                  <button class="btn btn-outline-secondary btn-sm">
+                    <i class="far fa-heart"></i> ถูกใจ
+                  </button>
+                  <a href="topic.html" class="btn btn-outline-secondary btn-sm">
+                    <i class="far fa-comment"></i> 5 ความคิดเห็น
+                  </a>
+                </div>
+
+                <button class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash"></i> ลบกระทู้
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

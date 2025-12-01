@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Webboard – กระทู้</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="bg-light">
+    <div class="container py-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <span class="badge bg-primary">Member</span>
+          <strong class="ms-2">Somchai_007</strong>
+          <span class="text-muted">• 2 ชั่วโมงที่แล้ว</span>
+
+          <h3 class="mt-3">สอบถามเรื่องการเขียน React ครับ</h3>
+          <p>ผมใช้ useEffect แล้วมันรันซ้ำ...</p>
+
+          <hr />
+
+          <!-- Comments -->
+          <h5 class="mb-3"><i class="far fa-comment"></i> ความคิดเห็น</h5>
+
+          <div class="mb-3 p-3 bg-light rounded">
+            <strong>Dev_Expert</strong>
+            <span class="text-muted">• 1 ชั่วโมงที่แล้ว</span>
+            <p class="mt-2">เป็นเพราะ React.StrictMode ครับ</p>
+          </div>
+
+          <!-- Comment form -->
+          <div class="d-flex gap-2">
+            <input class="form-control" placeholder="แสดงความคิดเห็น..." />
+            <button class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
