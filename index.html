@@ -1,131 +1,1039 @@
 <!DOCTYPE html>
 <html lang="th">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Webboard – หน้าแรก</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>เว็บบอร์ด - Modern Forum UI (Prototype)</title>
 
-    <!-- Bootstrap -->
+    <!-- Google Font: Prompt -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Icons -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      rel="stylesheet"
-    />
+    <style>
+      :root {
+        --bg: #f7f8fa;
+        --card: #ffffff;
+        --muted: #6b7280;
+        --primary: #0b66ff;
+        --accent-hot: #ff6b3d;
+        --border: #e6e9ef;
+        --shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+        --radius: 12px;
+        --max-width: 1200px;
+        --gap: 20px;
+      }
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css" />
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: "Prompt", system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial;
+        background: linear-gradient(180deg, var(--bg), #ffffff 80%);
+        color: #111827;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* =======================
+         NAVBAR MODERN FIXED
+      ======================= */
+      header.navbar {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(200, 200, 200, 0.3);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      }
+      .navbar .nav-inner {
+        max-width: var(--max-width);
+        margin: auto;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .nav-logo-box {
+        width: 38px;
+        height: 38px;
+        background: linear-gradient(135deg, #0b66ff, #2c7bf6);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 18px;
+        margin-left: 20px;
+      }
+      .nav-links a {
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+      .nav-links a:hover {
+        background: rgba(11, 102, 255, 0.08);
+        color: var(--primary);
+      }
+      .nav-actions {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .nav-actions .btn {
+        padding: 8px 14px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .nav-actions .btn.new-thread {
+        background: var(--primary);
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(11, 102, 255, 0.2);
+      }
+      .nav-actions .btn.ghost {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+      .nav-toggle {
+        display: none;
+        font-size: 22px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      .nav-mobile {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(10px);
+      }
+      .nav-mobile a {
+        padding: 8px;
+        border-radius: 8px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+      .nav-mobile a:hover {
+        background: rgba(11, 102, 255, 0.08);
+        color: var(--primary);
+      }
+      .nav-mobile .btn.new-thread {
+        width: 100%;
+        text-align: center;
+      }
+
+      @media (max-width: 880px) {
+        .nav-links {
+          display: none;
+        }
+        .nav-toggle {
+          display: block;
+        }
+      }
+
+      /* ==========================
+         MAIN LAYOUT (grid)
+      ========================== */
+      .container {
+        max-width: var(--max-width);
+        margin: 28px auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: var(--gap);
+      }
+
+      .main {
+        grid-column: 1/2;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .sidebar {
+        grid-column: 2/3;
+        position: relative;
+      }
+
+      /* ==========================
+         BUTTONS
+      ========================== */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+        color: #fff;
+        background: var(--primary);
+      }
+      .btn.ghost {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      /* ==========================
+         THREAD CARD
+      ========================== */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+      }
+      .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 14px;
+        display: flex;
+        gap: 12px;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 28px rgba(16, 24, 40, 0.08);
+      }
+      .thumb {
+        width: 86px;
+        height: 86px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f3f4f6;
+        display: grid;
+        place-items: center;
+      }
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 0;
+      }
+      .title {
+        font-weight: 700;
+        font-size: 16px;
+        margin: 0;
+        color: #0f172a;
+        line-height: 1.2;
+      }
+      .excerpt {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+      }
+      .card-footer {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-top: auto;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .tag {
+        padding: 6px 8px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 12px;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .tag.tech {
+        background: #06b6d4;
+      }
+      .tag.lifestyle {
+        background: #8b5cf6;
+      }
+      .tag.news {
+        background: #ef4444;
+      }
+
+      /* ==========================
+         SIDEBAR
+      ========================== */
+      .sidebar .section-title {
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #111827;
+      }
+      .trending-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .trend {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 8px;
+        border-radius: 8px;
+        background: rgba(255, 107, 61, 0.06);
+        border: 1px solid rgba(255, 107, 61, 0.08);
+        cursor: pointer;
+      }
+      .trend .rank {
+        width: 28px;
+        font-weight: 800;
+        text-align: center;
+        color: var(--accent-hot);
+      }
+
+      /* ==========================
+         Responsive
+      ========================== */
+      @media (max-width: 980px) {
+        .container {
+          grid-template-columns: 1fr;
+          padding: 12px;
+        }
+        .sidebar {
+          order: 2;
+          grid-column: 1/2;
+        }
+        .main {
+          order: 1;
+          grid-column: 1/2;
+        }
+      }
+      @media (max-width: 520px) {
+        .thumb {
+          width: 72px;
+          height: 72px;
+        }
+        .title {
+          font-size: 15px;
+        }
+        .card {
+          padding: 10px;
+        }
+      }
+    </style>
   </head>
 
-  <body class="bg-light">
-    <!-- Navbar -->
-    <nav class="navbar navbar-light bg-white border-bottom sticky-top">
-      <div class="container">
-        <a class="navbar-brand fw-bold text-primary">
-          <i class="fas fa-comments"></i> WebBoard
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" id="home-link">
+          <div class="nav-logo-box">WB</div>
+          <div>WebBoard</div>
         </a>
-
-        <form class="d-flex w-50">
-          <input
-            class="form-control"
-            type="search"
-            placeholder="ค้นหากระทู้..."
-          />
-        </form>
-
-        <div class="d-flex gap-2">
-          <a href="login.html" class="btn btn-outline-primary">เข้าสู่ระบบ</a>
-          <a href="register.html" class="btn btn-primary">สมัครสมาชิก</a>
+        <nav class="nav-links">
+          <a href="index.html">หน้าแรก</a>
+          <a href="#">หมวดหมู่ทั้งหมด</a>
+          <a href="#">กระทู้ฮอต</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="btn new-thread">➕ ตั้งกระทู้</button>
+          <a
+            href="login.html"
+            class="btn ghost"
+            title="เข้าสู่ระบบ"
+            style="
+              padding: 8px 12px;
+              border-radius: 10px;
+              border: 1px solid var(--border);
+              background: transparent;
+              color: var(--muted);
+              font-weight: 600;
+              text-decoration: none;
+            "
+            >เข้าสู่ระบบ</a
+          >
         </div>
       </div>
-    </nav>
+      <div class="nav-mobile" id="navMobile">
+        <a href="index.html">หน้าแรก</a>
+        <a href="#">หมวดหมู่ทั้งหมด</a>
+        <a href="#">กระทู้ฮอต</a>
+        <button class="btn new-thread">➕ ตั้งกระทู้</button>
+        <a
+          href="login.html"
+          class="btn ghost"
+          title="เข้าสู่ระบบ"
+          style="
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            font-weight: 600;
+            text-decoration: none;
+          "
+          >เข้าสู่ระบบ</a
+        >
+      </div>
+    </header>
 
-    <div class="container my-4">
-      <div class="row">
-        <!-- Sidebar -->
-        <aside class="col-md-3">
-          <div class="card mb-3">
-            <div class="card-body text-center">
-              <div
-                class="rounded-circle bg-secondary text-white mx-auto mb-3 d-flex justify-content-center align-items-center"
-                style="width: 70px; height: 70px; font-size: 1.5rem"
-              >
-                A
-              </div>
-              <h5 class="mb-0">Admin User</h5>
-              <span class="badge bg-danger mt-1">Admin</span>
-              <a href="#" class="btn btn-primary w-100 mt-3">
-                <i class="fas fa-plus"></i> ตั้งกระทู้ใหม่
-              </a>
+    <main class="container" role="main">
+      <!-- MAIN: thread list -->
+      <section class="main" id="page-home" aria-live="polite">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; flex-direction: column">
+            <h1 style="margin: 0; font-size: 22px">กระทู้ล่าสุด</h1>
+            <div style="color: var(--muted); font-size: 13px; margin-top: 6px">
+              เรียงตามล่าสุด — สแกนง่าย อ่านเร็ว
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-header d-flex justify-content-between">
-              <span>หมวดหมู่</span>
-              <button class="btn btn-sm btn-light">
-                <i class="fas fa-cog"></i>
+          <div style="display: flex; gap: 12px; align-items: center">
+            <div class="search" role="search" aria-label="ค้นหากระทู้">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M21 21l-4.35-4.35"
+                  stroke="#9aa5b1"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="6"
+                  stroke="#9aa5b1"
+                  stroke-width="1.4"
+                />
+              </svg>
+              <input
+                placeholder="ค้นหากระทู้ เช่น รีวิว, คำถาม, ข่าว..."
+                aria-label="ช่องค้นหา"
+              />
+            </div>
+            <select
+              style="
+                padding: 10px 12px;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+                background: white;
+              "
+            >
+              <option>ทั้งหมด</option>
+              <option>เทคโนโลยี</option>
+              <option>ไลฟ์สไตล์</option>
+              <option>ข่าว</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid" id="thread-grid" style="margin-top: 12px">
+          <!-- Thread cards (sample) -->
+          <article
+            class="card"
+            data-id="t1"
+            data-open="t1"
+            role="article"
+            tabindex="0"
+          >
+            <div class="thumb" aria-hidden>
+              <img
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=60&auto=format&fit=crop"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
+            <div class="card-body">
+              <h3 class="title">
+                แนะนำโน้ตบุ๊กทำงานปี 2025 — ประสิทธิภาพคุ้มค่า
+              </h3>
+              <p class="excerpt">
+                ซื้อยังไงให้คุ้ม งบ 30,000 - 50,000 บาท
+                ใครใช้รุ่นไหนบอกด้วยครับ...
+              </p>
+              <div class="card-footer">
+                <span class="tag tech">เทคโนโลยี</span>
+                <div class="meta">
+                  <span>โดย <strong>james</strong></span>
+                  <span>2 ชม.</span>
+                  <span>💬 24</span>
+                  <span>👁️ 1.2k</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="card"
+            data-id="t2"
+            data-open="t2"
+            role="article"
+            tabindex="0"
+          >
+            <div class="thumb" aria-hidden>
+              <img
+                src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=60&auto=format&fit=crop"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
+            <div class="card-body">
+              <h3 class="title">ประสบการณ์เที่ยวเชียงใหม่หน้าหนาว 2025</h3>
+              <p class="excerpt">
+                แชร์ที่พัก อาหาร และกิจกรรมที่ไม่ควรพลาดสำหรับทริปสั้นๆ 3 วัน 2
+                คืน
+              </p>
+              <div class="card-footer">
+                <span class="tag lifestyle">ไลฟ์สไตล์</span>
+                <div class="meta">
+                  <span>โดย <strong>mook</strong></span>
+                  <span>12 ชม.</span>
+                  <span>💬 8</span>
+                  <span>👁️ 590</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="card"
+            data-id="t3"
+            data-open="t3"
+            role="article"
+            tabindex="0"
+          >
+            <div class="thumb" aria-hidden>
+              <img
+                src="https://images.unsplash.com/photo-1508385082359-f05f8c4d5eb7?w=900&q=60&auto=format&fit=crop"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
+            <div class="card-body">
+              <h3 class="title">
+                ด่วน: ข่าวเทคโนโลยีใหม่ — เปิดตัวผลิตภัณฑ์ X
+              </h3>
+              <p class="excerpt">
+                สรุปงานแถลงเปิดตัวสินค้าใหม่ ข้อมูลฟีเจอร์ และราคา
+              </p>
+              <div class="card-footer">
+                <span class="tag news">ข่าว</span>
+                <div class="meta">
+                  <span>โดย <strong>admin</strong></span>
+                  <span>1 วัน</span>
+                  <span>💬 120</span>
+                  <span>👁️ 9.4k</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- THREAD VIEW (new) -->
+      <section class="thread-view" id="page-thread" aria-live="polite">
+        <div
+          style="
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+          "
+        >
+          <button class="btn ghost" id="open-thread-home" title="กลับ">
+            ← กลับ
+          </button>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; gap: 8px; align-items: center">
+              <div class="tag tech" style="padding: 6px 10px; font-size: 13px">
+                เทคโนโลยี
+              </div>
+              <h2
+                id="thread-title"
+                class="thread-title"
+                style="margin: 0 0 0 6px"
+              >
+                ตัวอย่างหัวข้อ
+              </h2>
+            </div>
+            <div class="thread-meta" style="margin-top: 8px">
+              <span>โดย <strong id="thread-author">admin</strong></span>
+              <span
+                >· <span id="thread-time">เมื่อ 1 ชั่วโมงที่แล้ว</span></span
+              >
+              <span>· <span id="thread-views">1.2k</span> ผู้ชม</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 18px; align-items: flex-start">
+          <div class="vote" aria-hidden>
+            <button class="vote-up" title="คะแนนเพิ่ม">▲</button>
+            <div id="post-votes" class="count">123</div>
+            <button class="vote-down" title="คะแนนลด">▼</button>
+          </div>
+
+          <div style="flex: 1">
+            <div id="thread-body" class="post-content">
+              <p>
+                นี่คือเนื้อหาตัวอย่างของกระทู้ — ระบบตัวอย่าง (client-side demo)
+              </p>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-top: 12px;
+                align-items: center;
+              "
+            >
+              <button class="btn" id="share-btn">แชร์กระทู้</button>
+              <button
+                class="btn ghost"
+                id="open-thread-newcomment"
+                style="border-radius: 10px"
+              >
+                แสดงความคิดเห็น
               </button>
             </div>
-            <ul class="list-group list-group-flush">
-              <a class="list-group-item active">ทั้งหมด</a>
-              <a class="list-group-item">พูดคุยทั่วไป</a>
-              <a class="list-group-item">ข่าวสาร IT</a>
-              <a class="list-group-item">สอบถามปัญหา</a>
-            </ul>
-          </div>
-        </aside>
 
-        <!-- Thread List -->
-        <main class="col-md-9">
-          <!-- Thread -->
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <div>
-                  <span class="badge bg-primary">Member</span>
-                  <strong class="ms-2">Somchai_007</strong>
-                  <span class="text-muted">• 2 ชั่วโมงที่แล้ว</span>
-                  <h5 class="mt-2">
-                    <a href="topic.html" class="text-decoration-none"
-                      >สอบถามเรื่องการเขียน React ครับ</a
-                    >
-                  </h5>
+            <!-- Comments -->
+            <section style="margin-top: 18px">
+              <h3 style="margin: 0 0 8px 0">ความคิดเห็น</h3>
+
+              <div id="comments-root" class="comments">
+                <div class="comment">
+                  <div class="meta-line">
+                    <strong>mook</strong><span>· 3 ชั่วโมงที่แล้ว</span>
+                  </div>
+                  <div class="body">
+                    ประสบการณ์ดีมากครับ แนะนำให้ไปช่วงต้นเดือน
+                  </div>
+                  <div class="comment-actions">
+                    <button class="reply-btn" data-reply-to="c1">
+                      ตอบกลับ
+                    </button>
+                  </div>
+
+                  <!-- inline reply form for this comment -->
+                  <div id="reply-form-c1" class="reply-form">
+                    <textarea placeholder="ตอบกลับ..."></textarea>
+                    <div class="row">
+                      <button data-submit-reply="c1" class="btn">ส่ง</button>
+                      <button data-cancel-reply="c1" class="btn ghost">
+                        ยกเลิก
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
-                <button class="btn btn-sm btn-outline-danger">
-                  <i class="fas fa-ban"></i> Ban User
-                </button>
+                <div class="comment lvl-1">
+                  <div class="meta-line">
+                    <strong>james</strong><span>· 1 ชั่วโมงที่แล้ว</span>
+                  </div>
+                  <div class="body">
+                    ผมแนะนำรุ่น A กับ B คุ้มค่าในงบที่กำหนด
+                  </div>
+                  <div class="comment-actions">
+                    <button class="reply-btn" data-reply-to="c2">
+                      ตอบกลับ
+                    </button>
+                  </div>
+                  <div id="reply-form-c2" class="reply-form">
+                    <textarea placeholder="ตอบกลับ..."></textarea>
+                    <div class="row">
+                      <button data-submit-reply="c2" class="btn">ส่ง</button>
+                      <button data-cancel-reply="c2" class="btn ghost">
+                        ยกเลิก
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <p class="text-muted mt-2">
-                ผมพยายามใช้ useEffect แต่มันรันซ้ำ 2 รอบ...
-              </p>
-
-              <div class="d-flex justify-content-between border-top pt-3">
-                <div class="d-flex gap-2">
-                  <button class="btn btn-outline-secondary btn-sm">
-                    <i class="far fa-heart"></i> ถูกใจ
+              <!-- New comment form -->
+              <div style="margin-top: 12px">
+                <textarea
+                  id="new-comment"
+                  placeholder="เขียนความคิดเห็น..."
+                  style="
+                    width: 100%;
+                    min-height: 80px;
+                    padding: 10px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                  "
+                ></textarea>
+                <div style="display: flex; gap: 8px; margin-top: 8px">
+                  <button id="post-comment-btn" class="btn">
+                    ส่งความคิดเห็น
                   </button>
-                  <a href="topic.html" class="btn btn-outline-secondary btn-sm">
-                    <i class="far fa-comment"></i> 5 ความคิดเห็น
-                  </a>
                 </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
 
-                <button class="btn btn-danger btn-sm">
-                  <i class="fas fa-trash"></i> ลบกระทู้
-                </button>
+      <!-- SIDEBAR -->
+      <aside class="sidebar" aria-label="แถบด้านข้าง">
+        <div class="card side">
+          <div class="section-title">กระทู้ฮอตวันนี้</div>
+          <div class="trending-list" id="trending">
+            <div class="trend" tabindex="0" role="button">
+              <div class="rank">1</div>
+              <div style="flex: 1">
+                <strong>ด่วน: ข่าวเทคโนโลยีใหม่ — เปิดตัวผลิตภัณฑ์ X</strong>
+                <div
+                  style="font-size: 12px; color: var(--muted); margin-top: 4px"
+                >
+                  👁️ 9.4k 💬 120
+                </div>
+              </div>
+            </div>
+            <div class="trend" tabindex="0" role="button">
+              <div class="rank">2</div>
+              <div style="flex: 1">
+                <strong>แนะนำโน้ตบุ๊กทำงานปี 2025 — ประสิทธิภาพคุ้มค่า</strong>
+                <div
+                  style="font-size: 12px; color: var(--muted); margin-top: 4px"
+                >
+                  👁️ 1.2k 💬 24
+                </div>
+              </div>
+            </div>
+            <div class="trend" tabindex="0" role="button">
+              <div class="rank">3</div>
+              <div style="flex: 1">
+                <strong>วิธีดูแลคีย์บอร์ด mechanical</strong>
+                <div
+                  style="font-size: 12px; color: var(--muted); margin-top: 4px"
+                >
+                  👁️ 800 💬 60
+                </div>
               </div>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="card side" style="margin-top: 14px">
+          <div class="section-title">หมวดหมู่ยอดนิยม</div>
+          <ul
+            style="
+              list-style: none;
+              padding: 0;
+              margin: 0;
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+            "
+          >
+            <li>
+              <a href="#" style="text-decoration: none; color: var(--muted)">
+                <span
+                  style="
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    background: #06b6d4;
+                    border-radius: 5px;
+                    margin-right: 8px;
+                  "
+                ></span
+                >เทคโนโลยี
+              </a>
+            </li>
+            <li>
+              <a href="#" style="text-decoration: none; color: var(--muted)">
+                <span
+                  style="
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    background: #8b5cf6;
+                    border-radius: 5px;
+                    margin-right: 8px;
+                  "
+                ></span
+                >ไลฟ์สไตล์
+              </a>
+            </li>
+            <li>
+              <a href="#" style="text-decoration: none; color: var(--muted)">
+                <span
+                  style="
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    background: #ef4444;
+                    border-radius: 5px;
+                    margin-right: 8px;
+                  "
+                ></span
+                >ข่าว
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+
+    <script>
+      /* Simple client-side behavior:
+         - Open thread (simulate navigation)
+         - Voting (post votes)
+         - Share (navigator.share or copy link)
+         - Comment reply toggles and submit stub
+      */
+
+      // Helpers
+      const qs = (s) => document.querySelector(s);
+      const qsa = (s) => Array.from(document.querySelectorAll(s));
+
+      /* NAV / ROUTING (simple) */
+      const homePage = qs("#page-home");
+      const threadPage = qs("#page-thread");
+      const homeLink = qs("#home-link");
+      const openThreadBtns = qsa("[data-open]");
+      const openThreadHomeBtn = qs("#open-thread-home");
+
+      function showHome() {
+        if (homePage) homePage.style.display = "block";
+        if (threadPage) threadPage.style.display = "none";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function showThread(id) {
+        // demo: set sample title/body based on id
+        const titleMap = {
+          t1: "แนะนำโน้ตบุ๊กทำงานปี 2025 — ประสิทธิภาพคุ้มค่า",
+          t2: "ประสบการณ์เที่ยวเชียงใหม่หน้าหนาว 2025",
+          t3: "ด่วน: ข่าวเทคโนโลยีใหม่ — เปิดตัวผลิตภัณฑ์ X",
+        };
+        const bodyMap = {
+          t1: "<p>คำแนะนำสำหรับโน้ตบุ๊กทำงาน: ให้ดูเรื่อง CPU, RAM, และการระบายความร้อนเป็นหลัก... (ตัวอย่าง)</p>",
+          t2: "<p>ถ้าจะเที่ยวเชียงใหม่หน้าหนาว แนะนำที่พักบริเวณนิมมานฯ และดอยสุเทพ... (ตัวอย่าง)</p>",
+          t3: "<p>วันนี้บริษัท X เปิดตัวผลิตภัณฑ์ใหม่ที่ใช้ AI ในการประมวลผลแบบ onboard... (ตัวอย่าง)</p>",
+        };
+        const tagMap = { t1: "tech", t2: "lifestyle", t3: "news" };
+
+        if (homePage) homePage.style.display = "none";
+        if (threadPage) threadPage.style.display = "block";
+
+        const titleEl = qs("#thread-title");
+        const bodyEl = qs("#thread-body");
+        const tagEl = qs(".thread-view .tag");
+
+        if (titleEl) titleEl.textContent = titleMap[id] || "หัวข้อทดสอบ";
+        if (bodyEl) bodyEl.innerHTML = bodyMap[id] || "<p>เนื้อหาทดสอบ</p>";
+        if (tagEl) {
+          tagEl.className = "tag " + (tagMap[id] || "tech");
+        }
+        // reset votes randomly for demo
+        const votesEl = qs("#post-votes");
+        if (votesEl) votesEl.textContent = Math.floor(10 + Math.random() * 400);
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // attach open-to-thread on card titles / cards
+      openThreadBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          // stop propagation so both card click and title click don't double-run
+          e.stopPropagation();
+          const id = e.currentTarget.dataset.open;
+          if (id) showThread(id);
+        });
+      });
+
+      // open when clicking the entire card (except interactive children)
+      qsa(".card").forEach((c) => {
+        c.addEventListener("click", (e) => {
+          // ignore clicks on interactive children (links/buttons)
+          const interactive = e.target.closest(
+            "a, button, select, input, textarea"
+          );
+          if (interactive) return;
+          const id = c.dataset.id || c.dataset.open;
+          if (id) showThread(id);
+        });
+
+        // keyboard activation
+        c.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            const id = c.dataset.id || c.dataset.open;
+            if (id) showThread(id);
+          }
+        });
+      });
+
+      // home link
+      homeLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        showHome();
+      });
+      if (openThreadHomeBtn) {
+        openThreadHomeBtn.addEventListener("click", (e) => {
+          showHome();
+        });
+      }
+
+      /* Voting (post) */
+      const voteUp = qs(".vote-up");
+      const voteDown = qs(".vote-down");
+      if (voteUp) {
+        voteUp.addEventListener("click", () => {
+          const el = qs("#post-votes");
+          let v = parseInt(el.textContent || "0", 10);
+          el.textContent = v + 1;
+        });
+      }
+      if (voteDown) {
+        voteDown.addEventListener("click", () => {
+          const el = qs("#post-votes");
+          let v = parseInt(el.textContent || "0", 10);
+          el.textContent = Math.max(0, v - 1);
+        });
+      }
+
+      /* Share button */
+      const shareBtn = qs("#share-btn");
+      if (shareBtn) {
+        shareBtn.addEventListener("click", async () => {
+          const title = qs("#thread-title")?.innerText || "WebBoard";
+          const url = location.href.split("#")[0] + "#thread";
+          if (navigator.share) {
+            try {
+              await navigator.share({ title, text: title, url });
+            } catch (err) {
+              // user cancelled share or error
+            }
+          } else {
+            // fallback: copy to clipboard
+            try {
+              await navigator.clipboard.writeText(url);
+              alert("คัดลอกลิงก์แล้ว: " + url);
+            } catch (e) {
+              prompt("คัดลอกลิงก์นี้:", url);
+            }
+          }
+        });
+      }
+
+      /* Comment reply toggles & posting (demo only) */
+      qsa(".reply-btn[data-reply-to]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const id = e.currentTarget.dataset.replyTo;
+          const form = qs("#reply-form-" + id);
+          if (!form) return;
+          // toggle
+          form.style.display = form.style.display === "flex" ? "none" : "flex";
+        });
+      });
+      qsa("[data-cancel-reply]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const id = e.currentTarget.dataset.cancelReply;
+          const form = qs("#reply-form-" + id);
+          if (form) form.style.display = "none";
+        });
+      });
+      qsa("[data-submit-reply]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const id = e.currentTarget.dataset.submitReply;
+          const form = qs("#reply-form-" + id);
+          if (!form) return;
+          const ta = form.querySelector("textarea");
+          const text = ta.value.trim();
+          if (!text) {
+            alert("กรุณาพิมพ์ข้อความก่อนส่ง");
+            return;
+          }
+          // Append a new comment node (demo: no server)
+          const newEl = document.createElement("div");
+          newEl.className = "comment lvl-1";
+          newEl.innerHTML =
+            '<div class="meta-line"><strong>คุณ</strong><span>· ตอนนี้</span></div><div class="body"></div>';
+          newEl.querySelector(".body").textContent = text;
+          form.parentNode.appendChild(newEl);
+          ta.value = "";
+          form.style.display = "none";
+        });
+      });
+
+      /* New comment posting */
+      const postCommentBtn = qs("#post-comment-btn");
+      if (postCommentBtn) {
+        postCommentBtn.addEventListener("click", () => {
+          const ta = qs("#new-comment");
+          const text = ta.value.trim();
+          if (!text) {
+            alert("กรุณาพิมพ์ความคิดเห็นก่อนส่ง");
+            return;
+          }
+          const commentsRoot = qs("#comments-root");
+          const newEl = document.createElement("div");
+          newEl.className = "comment";
+          newEl.innerHTML =
+            '<div class="meta-line"><strong>คุณ</strong><span>· ตอนนี้</span></div><div class="body"></div>';
+          newEl.querySelector(".body").textContent = text;
+          commentsRoot.appendChild(newEl);
+          ta.value = "";
+          alert("ส่งความคิดเห็นเรียบร้อย (ตัวอย่าง demo แบบ client-side)");
+        });
+      }
+
+      /* Small enhancement: clicking trending item opens thread matching title if found */
+      qsa(".trending-list .trend").forEach((t) => {
+        t.addEventListener("click", () => {
+          const text = t.innerText.toLowerCase();
+          if (text.includes("ผลิตภัณฑ์ x") || text.includes("ข่าวเทคโนโลยี"))
+            showThread("t3");
+          else if (text.includes("โน้ตบุ๊ก")) showThread("t1");
+          else if (text.includes("เชียงใหม่")) showThread("t2");
+        });
+      });
+
+      /* Accessibility: focus styles (optional small enhancement) */
+      qsa(".card").forEach((card) => {
+        card.addEventListener("focus", () => card.classList.add("focused"));
+        card.addEventListener("blur", () => card.classList.remove("focused"));
+      });
+
+      // initial view
+      showHome();
+    </script>
   </body>
 </html>
