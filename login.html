@@ -2,299 +2,426 @@
 <html lang="th">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>WebBoard - Login / Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebBoard - เข้าสู่ระบบ</title>
 
     <!-- Google Font: Prompt -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
     <!-- FontAwesome for social icons -->
-    <script
-      src="https://kit.fontawesome.com/a076d05399.js"
-      crossorigin="anonymous"
-    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
     <style>
       :root {
-        --bg: #f7f8fa;
-        --card: #ffffff;
-        --muted: #6b7280;
-        --primary: #0b66ff;
-        --accent-hot: #ff6b3d;
-        --border: #e6e9ef;
-        --shadow: 0 8px 24px rgba(16, 24, 40, 0.1);
-        --radius: 14px;
+        /* Light Theme Colors */
+        --bg-page: #f5f5f5; /* Light Gray for page background */
+        --bg-card: #ffffff; /* White for card */
+        --primary-yellow: #0b66ff;
+        --primary-yellow-hover: #0b66ff;
+        --text-main: #1e2329; /* Dark text */
+        --text-muted: #707a8a; /* Gray text */
+        --input-bg: #ffffff;
+        --input-border: #eaecef;
+        --input-focus: #0b66ff;
+        --border-line: #eaecef;
+        --btn-social-bg: #ffffff;
+        --btn-social-hover: #f5f5f5;
+
+        --radius: 8px;
         --max-width: 420px;
-        --gap: 20px;
       }
 
       * {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
       body {
-        margin: 0;
-        font-family: "Prompt", system-ui, -apple-system, Segoe UI, Roboto, Arial,
-          sans-serif;
-        background: var(--bg);
-        color: #111827;
-      }
-
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-
-      /* =========================
-         NAVBAR
-      ========================= */
-      header.navbar {
-        position: sticky;
-        top: 0;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(200, 200, 200, 0.3);
-        z-index: 200;
-      }
-      .nav-inner {
-        max-width: var(--max-width);
-        margin: auto;
-        display: flex;
-        align-items: center;
-        padding: 10px 20px;
-        gap: 12px;
-      }
-      .nav-logo {
-        font-weight: 700;
-        font-size: 18px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .nav-logo-box {
-        width: 38px;
-        height: 38px;
-        background: linear-gradient(135deg, #0b66ff, #2c7bf6);
-        color: #fff;
+        font-family: "Prompt", sans-serif;
+        background-color: var(--bg-page);
+        color: var(--text-main);
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
-      }
-      .nav-toggle {
-        display: none;
-        font-size: 22px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-      }
-      @media (max-width: 880px) {
-        .nav-toggle {
-          display: block;
-        }
+        padding: 20px;
       }
 
-      /* =========================
-         FORM CONTAINER
-      ========================= */
-      .form-wrapper {
+      /* Container */
+      .auth-container {
+        width: 100%;
         max-width: var(--max-width);
-        margin: 60px auto 40px auto;
-        padding: 36px 28px;
-        background: var(--card);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease;
+        background-color: var(--bg-card);
+        border-radius: 20px;
+        padding: 40px 30px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08); /* Lighter shadow for light theme */
+        position: relative;
       }
-      .form-wrapper h2 {
-        margin: 0 0 12px 0;
-        font-weight: 800;
-        font-size: 24px;
+
+      /* Header */
+      .auth-header {
+        margin-bottom: 30px;
       }
-      .form-wrapper p.subtitle {
-        margin: 0 0 24px 0;
-        color: var(--muted);
-        font-size: 14px;
-      }
-      .form-group {
+
+      .logo-area {
         display: flex;
-        flex-direction: column;
-        margin-bottom: 16px;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 24px;
+        color: #1e2329; /* Dark logo text */
+        font-weight: 700;
+        font-size: 20px;
       }
-      .form-group label {
-        margin-bottom: 6px;
+
+      .logo-area i {
+        color: #0b66ff; /* Yellow Icon */
+      }
+
+      .auth-header h2 {
+        font-size: 28px;
         font-weight: 600;
+        color: var(--text-main);
+        margin-bottom: 8px;
+      }
+
+      .auth-header p {
+        color: var(--text-muted);
         font-size: 14px;
       }
-      .form-group input {
-        padding: 12px 14px;
-        border-radius: 10px;
-        border: 1px solid var(--border);
+
+      /* Form Elements */
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
         font-size: 14px;
+        color: var(--text-main);
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 16px;
+        color: var(--text-main);
+        background-color: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius);
         outline: none;
         transition: all 0.2s;
-      }
-      .form-group input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(11, 102, 255, 0.1);
+        font-family: "Prompt", sans-serif;
       }
 
-      .btn {
-        padding: 12px 14px;
-        border-radius: 10px;
-        font-weight: 700;
-        border: none;
-        cursor: pointer;
-        background: var(--primary);
-        color: #fff;
+      .form-control:focus {
+        border-color: var(--input-focus);
+        box-shadow: 0 0 0 2px rgba(252, 213, 53, 0.2); /* Soft glow on focus */
+      }
+
+      .form-control::placeholder {
+        color: #b7bdc6;
+      }
+
+      /* Submit Button */
+      .btn-submit {
         width: 100%;
+        padding: 14px;
+        background-color: var(--primary-yellow);
+        color: #ffffff;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
         margin-top: 10px;
-        font-size: 15px;
-        transition: all 0.2s;
-      }
-      .btn:hover {
-        background: #0952d4;
-      }
-      .btn.ghost {
-        background: transparent;
-        border: 1px solid var(--border);
-        color: var(--muted);
+        font-family: "Prompt", sans-serif;
       }
 
-      .social-login {
-        display: flex;
-        gap: 12px;
-        margin-top: 20px;
+      .btn-submit:hover {
+        background-color: var(--primary-yellow-hover);
       }
-      .social-btn {
-        flex: 1;
+
+      /* Divider */
+      .divider {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 10px;
-        border-radius: 10px;
-        font-weight: 600;
-        cursor: pointer;
-        border: 1px solid var(--border);
+        text-align: center;
+        margin: 24px 0;
+        color: var(--text-muted);
         font-size: 14px;
-        background: white;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid var(--border-line);
+      }
+
+      .divider span {
+        padding: 0 10px;
+      }
+
+      /* Social Buttons */
+      .social-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn-social {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        padding: 12px 20px;
+        background-color: var(--btn-social-bg);
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius);
+        color: var(--text-main);
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
         transition: all 0.2s;
+        position: relative;
+        font-family: "Prompt", sans-serif;
       }
-      .social-btn i {
-        font-size: 18px;
+
+      .btn-social:hover {
+        background-color: var(--btn-social-hover);
+        border-color: #cfd6e0;
       }
-      .social-btn.google {
-        border-color: #db4437;
-        color: #db4437;
+
+      .btn-social i {
+        font-size: 20px;
+        width: 24px;
+        margin-right: 12px;
       }
-      .social-btn.google:hover {
-        background: #fce8e6;
+
+      /* New Google SVG Icon Style */
+      .google-icon-svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
       }
-      .social-btn.facebook {
-        border-color: #4267b2;
+
+      /* Footer / Toggle */
+      .auth-footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      .auth-footer a {
+        color: #0b66ff; /* Darker yellow for text links on white bg for readability */
+        text-decoration: none;
+        font-weight: 600;
+        margin-left: 5px;
+      }
+
+      .auth-footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Animation for switching forms */
+      .form-view {
+        animation: fadeIn 0.4s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Icon Colors for Light Theme */
+      /* Removed .fa-google color because we use SVG now */
+      .fa-facebook {
         color: #4267b2;
       }
-      .social-btn.facebook:hover {
-        background: #e8f0fe;
-      }
-
-      .toggle-link {
-        margin-top: 16px;
-        font-size: 14px;
-        text-align: center;
-      }
-      .toggle-link a {
-        color: var(--primary);
-        font-weight: 600;
-      }
-
-      @media (max-width: 420px) {
-        .form-wrapper {
-          margin: 40px 12px;
-          padding: 28px 20px;
-        }
+      .fa-apple {
+        color: #000;
       }
     </style>
   </head>
-
   <body>
-    <!-- LOGIN FORM -->
-    <div class="form-wrapper" id="login-form">
-      <h2>เข้าสู่ระบบ</h2>
-      <p class="subtitle">ใช้บัญชี WebBoard หรือเข้าสู่ระบบด้วย Social Login</p>
-      <div class="form-group">
-        <label for="login-email">อีเมล</label>
-        <input type="email" id="login-email" placeholder="email@example.com" />
-      </div>
-      <div class="form-group">
-        <label for="login-password">รหัสผ่าน</label>
-        <input type="password" id="login-password" placeholder="••••••••" />
-      </div>
-      <button class="btn">เข้าสู่ระบบ</button>
+    <div class="auth-container">
+      <!-- Header Logo (Visible on both) -->
+      <div class="logo-area"><i class="fas fa-layer-group"></i> WebBoard</div>
 
-      <div class="social-login">
-        <div class="social-btn google">
-          <i class="fab fa-google"></i> Google
+      <!-- LOGIN VIEW -->
+      <div id="login-view" class="form-view">
+        <div class="auth-header">
+          <h2>ยินดีต้อนรับ</h2>
+          <p>เข้าสู่ระบบเพื่อใช้งาน WebBoard</p>
         </div>
-        <div class="social-btn facebook">
-          <i class="fab fa-facebook-f"></i> Facebook
+
+        <form onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label class="form-label">อีเมล / เบอร์โทรศัพท์</label>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="ระบุอีเมลของคุณ"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">รหัสผ่าน</label>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="ระบุรหัสผ่าน"
+            />
+          </div>
+
+          <button class="btn-submit">เข้าสู่ระบบ</button>
+        </form>
+
+        <div class="divider"><span>หรือ</span></div>
+
+        <div class="social-buttons">
+          <!-- Google Multi-Color SVG -->
+          <button class="btn-social">
+            <svg
+              class="google-icon-svg"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 48 48"
+            >
+              <path
+                fill="#FFC107"
+                d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+              />
+              <path
+                fill="#FF3D00"
+                d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+              />
+              <path
+                fill="#4CAF50"
+                d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+              />
+              <path
+                fill="#1976D2"
+                d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+              />
+            </svg>
+            ดำเนินการต่อด้วย Google
+          </button>
+          <button class="btn-social">
+            <i class="fab fa-facebook"></i> ดำเนินการต่อด้วย Facebook
+          </button>
+          <button class="btn-social">
+            <i class="fab fa-apple"></i> ดำเนินการต่อด้วย Apple
+          </button>
+        </div>
+
+        <div class="auth-footer">
+          ยังไม่มีบัญชี?
+          <a href="#" onclick="toggleForm('register')">สมัครสมาชิก</a>
         </div>
       </div>
 
-      <div class="toggle-link">
-        ยังไม่มีบัญชี? <a href="#" id="show-register">สมัครสมาชิก</a>
-      </div>
-    </div>
-
-    <!-- REGISTER FORM -->
-    <div class="form-wrapper" id="register-form" style="display: none">
-      <h2>สมัครสมาชิก</h2>
-      <p class="subtitle">สร้างบัญชี WebBoard หรือใช้ Social Login</p>
-      <div class="form-group">
-        <label for="reg-username">ชื่อผู้ใช้</label>
-        <input type="text" id="reg-username" placeholder="ชื่อผู้ใช้" />
-      </div>
-      <div class="form-group">
-        <label for="reg-email">อีเมล</label>
-        <input type="email" id="reg-email" placeholder="email@example.com" />
-      </div>
-      <div class="form-group">
-        <label for="reg-password">รหัสผ่าน</label>
-        <input type="password" id="reg-password" placeholder="••••••••" />
-      </div>
-      <button class="btn">สมัครสมาชิก</button>
-
-      <div class="social-login">
-        <div class="social-btn google">
-          <i class="fab fa-google"></i> Google
+      <!-- REGISTER VIEW (Hidden by default) -->
+      <div id="register-view" class="form-view" style="display: none">
+        <div class="auth-header">
+          <h2>สร้างบัญชีใหม่</h2>
+          <p>สมัครสมาชิกเพื่อเริ่มใช้งาน</p>
         </div>
-        <div class="social-btn facebook">
-          <i class="fab fa-facebook-f"></i> Facebook
-        </div>
-      </div>
 
-      <div class="toggle-link">
-        มีบัญชีอยู่แล้ว? <a href="#" id="show-login">เข้าสู่ระบบ</a>
+        <form onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label class="form-label">ชื่อผู้ใช้</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="ตั้งชื่อผู้ใช้"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">อีเมล</label>
+            <input type="email" class="form-control" placeholder="ระบุอีเมล" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">รหัสผ่าน</label>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="ตั้งรหัสผ่าน (อย่างน้อย 8 ตัวอักษร)"
+            />
+          </div>
+
+          <button class="btn-submit">สมัครสมาชิก</button>
+        </form>
+
+        <div class="divider"><span>หรือ</span></div>
+
+        <div class="social-buttons">
+          <!-- Google Multi-Color SVG -->
+          <button class="btn-social">
+            <svg
+              class="google-icon-svg"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 48 48"
+            >
+              <path
+                fill="#FFC107"
+                d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+              />
+              <path
+                fill="#FF3D00"
+                d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+              />
+              <path
+                fill="#4CAF50"
+                d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+              />
+              <path
+                fill="#1976D2"
+                d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+              />
+            </svg>
+            สมัครด้วย Google
+          </button>
+          <button class="btn-social">
+            <i class="fab fa-facebook"></i> สมัครด้วย Facebook
+          </button>
+        </div>
+
+        <div class="auth-footer">
+          มีบัญชีอยู่แล้ว?
+          <a href="#" onclick="toggleForm('login')">เข้าสู่ระบบ</a>
+        </div>
       </div>
     </div>
 
     <script>
-      // Toggle Login / Register
-      const loginForm = document.getElementById("login-form");
-      const registerForm = document.getElementById("register-form");
-      document.getElementById("show-register").onclick = (e) => {
-        e.preventDefault();
-        loginForm.style.display = "none";
-        registerForm.style.display = "block";
-      };
-      document.getElementById("show-login").onclick = (e) => {
-        e.preventDefault();
-        registerForm.style.display = "none";
-        loginForm.style.display = "block";
-      };
+      function toggleForm(target) {
+        const loginView = document.getElementById("login-view");
+        const registerView = document.getElementById("register-view");
+
+        if (target === "register") {
+          loginView.style.display = "none";
+          registerView.style.display = "block";
+        } else {
+          registerView.style.display = "none";
+          loginView.style.display = "block";
+        }
+      }
     </script>
   </body>
 </html>
